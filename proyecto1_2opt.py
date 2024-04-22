@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 
+#AFH  22/04
 def read_excel_file(filename, sheet_name): #Read coordinates and demand values from a specific sheet in an Excel file. Assumes the data is in columns labeled 'X', 'Y', and 'Demand'.
     df = pd.read_excel(filename, sheet_name=sheet_name, header=1) #ponemos header=1 para poner la primera fila de como 
     print(df)
