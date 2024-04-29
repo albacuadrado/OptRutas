@@ -93,43 +93,43 @@ for route in solution:
 
 #implementamos la segunda parte del código con el algoritmo 2-opt
 def two_opt(routes, dist_matrix, num_iterations): 
-    best_routes = routes.copy()
+    best_routes = routes.copy() #Hacemos una copia de las rutas para no modificar las originales y para poder comprobar si se han hecho mejoras
 
     for _ in range(num_iterations):
-        selected_route_idx = np.random.randint(0,len(routes))
-        selected_route = routes[selected_route_idx]
+        selected_route_idx = np.random.randint(0,len(routes)) #Índice aleatorio para seleccionar una ruta específica de la lista de rutas
+        selected_route = routes[selected_route_idx] #Esta va a ser la ruta elegida según el índice aleatorio
 
-        i, j = np.random.randint(1,len(selected_route) -1, size=2)
+        i, j = np.random.randint(1,len(selected_route) -1, size=2) #Desginar una valor para i y j dentro de las rutas seleccionadas para intentar encontrar una mejora mediante la reversión del orden de visita entre estos dos puntos
 
-        if j < i:
+        if j < i: #Este if se asegura que i sea siempre menor que j 
             i, j = j, i
 
-        new_route = selected_route.copy()
-        new_route[i:j] = selected_route[j -1: i - 1: -1] # Reverse the path b
+        new_route = selected_route.copy() #Copia de las rutas seleccionadas. 
+        new_route[i:j] = selected_route[j -1: i - 1: -1] #Invierte la ruta para ver si la distancia es menor de la nueva manera
 
-        new_total_distance = calculate_total_distance(new_route, dist_matrix)
-        current_total_distance = calculate_total_distance(best_routes[selected_route_idx], dist_matrix)
+        new_total_distance = calculate_total_distance(new_route, dist_matrix) #Calcula distancia total de la nueva ruta modificada
+        current_total_distance = calculate_total_distance(best_routes[selected_route_idx], dist_matrix) #Calcula la distancia total de la ruta actual antes de la modificación
 
 
-        if new_total_distance < current_total_distance:
+        if new_total_distance < current_total_distance: #Si la distancia total de la nueva ruta es menor que la distancia total de la ruta actual, actualiza la ruta en best_routes con la nueva ruta. Esto provoca una nueva versión más eficiente de las rutas.
             best_routes[selected_route_idx] = new_route.copy()
-            print('best rouetes', best_routes)
+            print('best rouetes', best_routes) #Se imprime cuando se halla una nueva ruta.
 
     return best_routes
 
 
 def vrp_solver2(filename, sheet_name, capacity, num_iterations): #Resolviendo el problema del proyecto usando las funciones anteriores y le nuevo codigo.
     coordinates, demands = read_excel_file(filename, sheet_name)
-    dist_matrix = calculate_distance_matrix(coordinates)
+    dist_matrix = calculate_distance_matrix(coordinates) #Calcula y devuelve una matriz de distancias entre todos los puntos basada en sus coordenadas.
     routes = nearest_neighbor(dist_matrix, demands, capacity)
 
-    for i in range(len(routes)):
+    for i in range(len(routes)): #Recorre todas las rutas generadas por la función del vecino más cercano
         route = routes[i]
-        optimized_route = two_opt([route], dist_matrix, num_iterations)[0]
+        optimized_route = two_opt([route], dist_matrix, num_iterations)[0] #Se le aplica a cada ruta para intentar mejorarla. 
         routes[i] = optimized_route
 
     formatted_routes = format_output(routes)
-    return formatted_routes
+    return formatted_routes 
 
 
 solucion_final = vrp_solver2(r"D:\uni CEU\segundo cuatri\proyecto 1\excel coordendas\ubicaciones exactas península.xlsx", "Hoja1", 30, 30)
