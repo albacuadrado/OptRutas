@@ -34,32 +34,32 @@ def calculate_total_distance(route, dist_matrix): #Calcular la distancia total d
 
 def nearest_neighbor(dist_matrix, demands, capacity):#Utiliza el algoritmo del Vecino más Cercano para hallar las rutas que van a realizar los camiones.
     num_points = dist_matrix.shape[0]
-    visited = np.zeros(num_points, dtype=bool)
-    routes = []
+    visited = np.zeros(num_points, dtype=bool) #Lleva registro de de los puntos que se van visitando
+    routes = [] #Lista vacía para ir añadiendo las rutas
 
-    while np.sum(visited) < num_points:
-        current_node = np.where(~visited)[0][0] if any(~visited) else 0 # Start at node 0
+    while np.sum(visited) < num_points: #Genera rutas hasta que todos los puntos han sido visitados
+        current_node = np.where(~visited)[0][0] if any(~visited) else 0 #Selecciona el primer punto no visitado como el nodo actual para empezar una nueva ruta. Si todos los puntos están visitados empieza en el punto 0.
         current_capacity = 0
         route = [current_node]
-        visited[current_node] = True 
+        visited[current_node] = True #Marca el nodo actual como visitado
 
         while True:
-            current = route[-1]
+            current = route[-1] #Se va a buscar el vecino más cercano al último punto añadido a la ruta
             nearest = None
-            min_dist = float('inf')
+            min_dist = float('inf') #Inicializamos la distancia mínima en infinito para poder encontrar la menor distancia posible
 
-            for neighbor in np.where(~visited)[0]:
-                if demands[neighbor] + current_capacity <= capacity:
+            for neighbor in np.where(~visited)[0]: #Este bucle recorre todos los puntos no visitados
+                if demands[neighbor] + current_capacity <= capacity: #Si agregar este vecino no excede la capacidad del vehículo y la distancia es menor que la distancia mínima actual, actualiza nearest y min_dist
                     if dist_matrix[current, neighbor] < min_dist:
                         nearest = neighbor
                         min_dist = dist_matrix[current, neighbor]
-            if nearest is None:
+            if nearest is None: #Si no encuentra ningún vecino apto a estas características rompe el bucle para finalizar la ruta.
                 break
 
-            route.append(nearest)
+            route.append(nearest) #añade el vecino más cercano
             visited[nearest] = True
-            current_capacity += demands[nearest]
-        routes.append(route)
+            current_capacity += demands[nearest] #Actualiza la capacidad con la demanda del vecino añadido
+        routes.append(route) #Cuando ya no hay más vecinos que recorrer se devuelve la lista de rutas.
     return routes
 
 
