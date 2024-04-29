@@ -129,8 +129,8 @@ def vrp_solver2(filename, sheet_name, capacity, num_iterations): #Resolviendo el
         routes[i] = optimized_route
 
     formatted_routes = format_output(routes)
-    return formatted_routes 
+    return formatted_routes #Devuelve las rutas 
 
 
 solucion_final = vrp_solver2(r"D:\uni CEU\segundo cuatri\proyecto 1\excel coordendas\ubicaciones exactas península.xlsx", "Hoja1", 30, 30)
-print('Solución final:', solucion_final)
+print('Solución final:', solucion_final) #Imprime la solución final
