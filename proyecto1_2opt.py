@@ -133,7 +133,5 @@ def vrp_solver2(filename, sheet_name, capacity, num_iterations): #Resolviendo el
 
 
 solucion_final = vrp_solver2(r"D:\uni CEU\segundo cuatri\proyecto 1\excel coordendas\ubicaciones exactas península.xlsx", "Hoja1", 30, 30)
-print('Solución final:', solucion_final) #Imprime la solución final
-
-for i, route in enumerate(solucion_final, start=1): 
+for i, route in enumerate(solucion_final, start=1): #Imprime la solución final
         print('Ruta solución final y furgoneta número', i,':', route)
