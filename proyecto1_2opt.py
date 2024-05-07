@@ -83,11 +83,11 @@ print(filename)
 sheet_name = "Hoja1" #El nombre de la hoja donde hemos trabajo con el excel
 capacity = 50 #La capacidad que pueden tener los camiones
 solution = vrp_solver(filename, sheet_name, capacity) #Resolvemos
-print(solution)
+print("La capacidad de las furgonetas es:", capacity)
 
 
-for route in solution: 
-    print(route)
+for i, route in enumerate(solution, start=1): 
+        print('Ruta y furgoneta número', i,':', route)
 
 
 
@@ -113,7 +113,7 @@ def two_opt(routes, dist_matrix, num_iterations):
 
         if new_total_distance < current_total_distance: #Si la distancia total de la nueva ruta es menor que la distancia total de la ruta actual, actualiza la ruta en best_routes con la nueva ruta. Esto provoca una nueva versión más eficiente de las rutas.
             best_routes[selected_route_idx] = new_route.copy()
-            print('best rouetes', best_routes) #Se imprime cuando se halla una nueva ruta.
+            print('best routes', best_routes) #Se imprime cuando se halla una nueva ruta.
 
     return best_routes
 
@@ -134,3 +134,6 @@ def vrp_solver2(filename, sheet_name, capacity, num_iterations): #Resolviendo el
 
 solucion_final = vrp_solver2(r"D:\uni CEU\segundo cuatri\proyecto 1\excel coordendas\ubicaciones exactas península.xlsx", "Hoja1", 30, 30)
 print('Solución final:', solucion_final) #Imprime la solución final
+
+for i, route in enumerate(solucion_final, start=1): 
+        print('Ruta solución final y furgoneta número', i,':', route)
