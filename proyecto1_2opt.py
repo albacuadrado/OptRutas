@@ -99,6 +99,9 @@ def two_opt(routes, dist_matrix, num_iterations):
         selected_route_idx = np.random.randint(0,len(routes)) #Índice aleatorio para seleccionar una ruta específica de la lista de rutas
         selected_route = routes[selected_route_idx] #Esta va a ser la ruta elegida según el índice aleatorio
 
+        if len(selected_route) < 3: #Si la ruta tiene menos de 3 nodos, no se puede aplicar el algoritmo 2-opt
+            continue
+
         i, j = np.random.randint(1,len(selected_route) -1, size=2) #Desginar una valor para i y j dentro de las rutas seleccionadas para intentar encontrar una mejora mediante la reversión del orden de visita entre estos dos puntos
 
         if j < i: #Este if se asegura que i sea siempre menor que j 
@@ -132,6 +135,6 @@ def vrp_solver2(filename, sheet_name, capacity, num_iterations): #Resolviendo el
     return formatted_routes #Devuelve las rutas 
 
 
-solucion_final = vrp_solver2(r"D:\uni CEU\segundo cuatri\proyecto 1\excel coordendas\ubicaciones exactas península.xlsx", "Hoja1", 30, 30)
+solucion_final = vrp_solver2(r"D:\uni CEU\segundo cuatri\proyecto 1\excel coordendas\ubicaciones exactas península.xlsx", "Hoja1", 50, 50)
 for i, route in enumerate(solucion_final, start=1): #Imprime la solución final
         print('Ruta solución final y furgoneta número', i,':', route)
